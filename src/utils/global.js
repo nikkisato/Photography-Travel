@@ -20,6 +20,7 @@ html {
     --color-mainLighter: ${props => props.theme.colors.mainLighter};
     --color-text: ${props => props.theme.colors.textColor};
     --color-white: ${props => props.theme.colors.whiteColor};
+    --color-redError: ${props => props.theme.colors.errorRed};
     --shadow: ${props => props.theme.colors.shadow};
 
     @media ${props => props.theme.mediaQueries.smallest} {
