@@ -1,8 +1,10 @@
 import React from 'react';
-import { Formik, Field, ErrorMessage } from 'formik';
+import { Formik, Field } from 'formik';
 import * as Yup from 'yup';
 import { FormWrapper, StyledForm } from '../../../hoc/layouts/elements';
 import Input from '../../../components/UI/Forms/Input/Input';
+import Button from '../../../components/UI/Forms/Button/Button';
+import Heading from '../../../components/UI/Heading/Heading';
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string()
@@ -22,7 +24,12 @@ const Login = () => {
     >
       {({ isSubmitting, isValid }) => (
         <FormWrapper>
-          <h1>Login here...</h1>
+          <Heading size='h1' color='white' noMargin>
+            Login into your account
+          </Heading>
+          <Heading bold size='h4' color='white'>
+            Fill in your details to login into your account
+          </Heading>
           <StyledForm>
             <Field
               type='email'
@@ -30,7 +37,6 @@ const Login = () => {
               placeholder='Your email...'
               component={Input}
             />
-            <ErrorMessage name='email'></ErrorMessage>
 
             <Field
               type='password'
@@ -38,8 +44,10 @@ const Login = () => {
               placeholder='Your password...'
               component={Input}
             />
-            <ErrorMessage name='password'></ErrorMessage>
-            <button type='submit'>Submit</button>
+
+            <Button disabled={!isValid} type='submit'>
+              Login
+            </Button>
           </StyledForm>
         </FormWrapper>
       )}
