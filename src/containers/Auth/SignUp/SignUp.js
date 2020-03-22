@@ -8,6 +8,12 @@ import Button from '../../../components/UI/Forms/Button/Button';
 import Heading from '../../../components/UI/Heading/Heading';
 import * as actions from '../../../store/actions';
 import Message from '../../../components/UI/Message/Message';
+import styled from 'styled-components';
+
+const MessageWrapper = styled.div`
+  position: absolute;
+  bottom: 0;
+`;
 
 const SignUpSchema = Yup.object().shape({
   firstName: Yup.string()
@@ -29,8 +35,7 @@ const SignUpSchema = Yup.object().shape({
     .required('You need to confirm your password.')
 });
 
-const SignUp = ({ signUp, loading, error, success }) => {
-  console.log(error);
+const SignUp = ({ signUp, loading, error }) => {
   return (
     <Formik
       initialValues={{
@@ -95,9 +100,11 @@ const SignUp = ({ signUp, loading, error, success }) => {
             >
               Sign Up
             </Button>
-            <Message error show={error}>
-              {error}
-            </Message>
+            <MessageWrapper>
+              <Message error show={error}>
+                {error}
+              </Message>
+            </MessageWrapper>
           </StyledForm>
         </FormWrapper>
       )}

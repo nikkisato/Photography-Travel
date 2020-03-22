@@ -18,10 +18,13 @@ export const FormWrapper = styled.div`
   align-items: center;
   background-color: var(--color-mainDark);
   box-shadow: 0rem 0.5rem 3.5rem var(--shadow);
+  justify-content: center;
 `;
 
 export const StyledForm = styled(Form)`
   display: flex;
   flex-direction: column;
   width: 100%;
+  position: relative;
+  align-items: center;
 `;

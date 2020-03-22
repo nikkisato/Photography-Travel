@@ -5,19 +5,35 @@ import Home from './containers/Home/Home';
 import Todos from './containers/Todos/Todos';
 import Login from './containers/Auth/Login/Login';
 import SignUp from './containers/Auth/SignUp/SignUp';
+import { connect } from 'react-redux';
 
-const App = () => {
-  return (
-    <Layout>
+const App = ({ loggedIn }) => {
+  console.log(loggedIn);
+
+  let routes;
+  if (loggedIn) {
+    routes = (
       <Switch>
         <Route exact path='/' component={Home}></Route>
         <Route exact path='/todos' component={Todos}></Route>
+        <Redirect to='/'></Redirect>
+      </Switch>
+    );
+  } else {
+    routes = (
+      <Switch>
+        <Route exact path='/' component={Home}></Route>
         <Route exact path='/login' component={Login}></Route>
         <Route exact path='/signup' component={SignUp}></Route>
         <Redirect to='/'></Redirect>
       </Switch>
-    </Layout>
-  );
+    );
+  }
+  return <Layout>{routes}</Layout>;
 };
 
-export default App;
+const mapStateToProps = ({ firebase }) => ({
+  loggedIn: firebase.auth.uid ? true : null
+});
+
+export default connect(mapStateToProps)(App);
