@@ -44,12 +44,12 @@ const Menu = styled.div`
   transition: all 0.2s cubic-bezier(0.445, 0.05, 0.55, 0.95);
   display: none;
 
-@media ${props => props.theme.mediaQueries.smallest} {
-  display: flex;
-}
+  @media ${props => props.theme.mediaQueries.smallest} {
+    display: flex;
+  }
 `;
 
-const SideDrawer = () => {
+const SideDrawer = ({ loggedIn }) => {
   const [isOpened, setIsOpened] = useState(false);
   return (
     <>
@@ -60,7 +60,11 @@ const SideDrawer = () => {
         </Wrapper>
       </FixedWrapper>
       <Menu opened={isOpened}>
-        <NavItems mobile clicked={() => setIsOpened(false)} />
+        <NavItems
+          loggedIn={loggedIn}
+          mobile
+          clicked={() => setIsOpened(false)}
+        />
       </Menu>
     </>
   );
