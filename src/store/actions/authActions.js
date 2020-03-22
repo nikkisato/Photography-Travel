@@ -1,5 +1,5 @@
 import * as actions from './actionTypes';
-
+//SignUp
 export const signUp = data => async (
   dispatch,
   getState,
@@ -27,4 +27,15 @@ export const signUp = data => async (
     dispatch({ type: actions.AUTH_FAIL, payload: err.message });
   }
   dispatch({ type: actions.AUTH_END });
+};
+
+//Logout action
+export const signOut = () => async (dispatch, getState, { getFirebase }) => {
+  const firebase = getFirebase();
+
+  try {
+    await firebase.auth().signOut();
+  } catch (err) {
+    console.log(err);
+  }
 };

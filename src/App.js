@@ -6,6 +6,7 @@ import Todos from './containers/Todos/Todos';
 import Login from './containers/Auth/Login/Login';
 import SignUp from './containers/Auth/SignUp/SignUp';
 import { connect } from 'react-redux';
+import Logout from './containers/Auth/Logout/Logout';
 
 const App = ({ loggedIn }) => {
   console.log(loggedIn);
@@ -14,18 +15,20 @@ const App = ({ loggedIn }) => {
   if (loggedIn) {
     routes = (
       <Switch>
-        <Route exact path='/' component={Home}></Route>
-        <Route exact path='/todos' component={Todos}></Route>
-        <Redirect to='/'></Redirect>
+        <Route exact path='/' component={Home} />
+        <Route exact path='/todos' component={Todos} />
+        <Route exact path='/logout' component={Logout} />
+
+        <Redirect to='/' />
       </Switch>
     );
   } else {
     routes = (
       <Switch>
-        <Route exact path='/' component={Home}></Route>
-        <Route exact path='/login' component={Login}></Route>
-        <Route exact path='/signup' component={SignUp}></Route>
-        <Redirect to='/'></Redirect>
+        <Route exact path='/' component={Home} />
+        <Route exact path='/login' component={Login} />
+        <Route exact path='/signup' component={SignUp} />
+        <Redirect to='/' />
       </Switch>
     );
   }
