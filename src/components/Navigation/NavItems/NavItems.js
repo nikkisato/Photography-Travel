@@ -20,9 +20,9 @@ const NavItems = ({ mobile, clicked, loggedIn }) => {
   if (loggedIn.uid) {
     links = (
       <Ul mobile={mobile}>
-        <NavItem clicked={clicked} mobile={mobile} link='/'>
+        {/* <NavItem clicked={clicked} mobile={mobile} link='/'>
           Home
-        </NavItem>
+        </NavItem> */}
         <NavItem clicked={clicked} mobile={mobile} link='/todos'>
           Todos
         </NavItem>
@@ -34,12 +34,12 @@ const NavItems = ({ mobile, clicked, loggedIn }) => {
   } else {
     links = (
       <Ul mobile={mobile}>
-        <NavItem clicked={clicked} mobile={mobile} link='/'>
+        {/* <NavItem clicked={clicked} mobile={mobile} link='/'>
           Home
-        </NavItem>
-        <NavItem clicked={clicked} mobile={mobile} link='/todos'>
+        </NavItem> */}
+        {/* <NavItem clicked={clicked} mobile={mobile} link='/todos'>
           Todos
-        </NavItem>
+        </NavItem> */}
         <NavItem clicked={clicked} mobile={mobile} link='/login'>
           Login
         </NavItem>

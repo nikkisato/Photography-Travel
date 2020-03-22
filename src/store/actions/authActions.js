@@ -36,6 +36,26 @@ export const signOut = () => async (dispatch, getState, { getFirebase }) => {
   try {
     await firebase.auth().signOut();
   } catch (err) {
-    console.log(err);
+    console.log(err.message);
   }
 };
+
+//Login Actions
+
+export const signIn = data => async (dispatch, getState, { getFirebase }) => {
+  const firebase = getFirebase();
+  dispatch({ type: actions.AUTH_START });
+
+  try {
+    await firebase.auth().signInWithEmailAndPassword(data.email, data.password);
+    dispatch({ type: actions.AUTH_SUCCESS });
+  } catch (err) {
+    dispatch({ type: actions.AUTH_FAIL, payload: err.message });
+  }
+  dispatch({ type: actions.AUTH_END });
+};
+
+//Clean up Error messages
+export const clean = () => ({
+  type: actions.CLEAN_UP
+});
