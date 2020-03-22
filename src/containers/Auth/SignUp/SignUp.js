@@ -7,6 +7,7 @@ import Input from '../../../components/UI/Forms/Input/Input';
 import Button from '../../../components/UI/Forms/Button/Button';
 import Heading from '../../../components/UI/Heading/Heading';
 import * as actions from '../../../store/actions';
+import Message from '../../../components/UI/Message/Message';
 
 const SignUpSchema = Yup.object().shape({
   firstName: Yup.string()
@@ -28,7 +29,8 @@ const SignUpSchema = Yup.object().shape({
     .required('You need to confirm your password.')
 });
 
-const SignUp = ({ signUp }) => {
+const SignUp = ({ signUp, loading, error, success }) => {
+  console.log(error);
   return (
     <Formik
       initialValues={{
@@ -39,9 +41,8 @@ const SignUp = ({ signUp }) => {
         confirmPassword: ''
       }}
       validationSchema={SignUpSchema}
-      onSubmit={(values, { setSubmitting }) => {
-        console.log(values);
-        signUp(values);
+      onSubmit={async (values, { setSubmitting }) => {
+        await signUp(values);
         setSubmitting(false);
       }}
     >
@@ -87,9 +88,16 @@ const SignUp = ({ signUp }) => {
               component={Input}
             />
 
-            <Button disabled={!isValid} type='submit'>
+            <Button
+              loading={loading ? 'Signing up...' : null}
+              disabled={!isValid || isSubmitting}
+              type='submit'
+            >
               Sign Up
             </Button>
+            <Message error show={error}>
+              {error}
+            </Message>
           </StyledForm>
         </FormWrapper>
       )}
@@ -97,7 +105,10 @@ const SignUp = ({ signUp }) => {
   );
 };
 
-const mapStateToProps = state => ({});
+const mapStateToProps = ({ auth }) => ({
+  loading: auth.loading,
+  error: auth.error
+});
 
 const mapDispatchToProps = {
   signUp: actions.signUp

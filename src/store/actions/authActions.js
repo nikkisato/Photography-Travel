@@ -5,6 +5,7 @@ export const signUp = data => async (
 ) => {
   const firebase = getFirebase();
   const firestore = getFirestore();
+  dispatch({ type: 'AUTH_START' });
 
   try {
     const res = await firebase
@@ -19,5 +20,8 @@ export const signUp = data => async (
         firstName: data.firstName,
         lastName: data.lastName
       });
-  } catch (err) {}
+  } catch (err) {
+    dispatch({ type: 'AUTH_FAIL', payload: err.message });
+  }
+  dispatch({ type: 'AUTH_END' });
 };
