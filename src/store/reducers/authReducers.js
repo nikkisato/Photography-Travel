@@ -103,9 +103,9 @@ export default (state = initialState, { type, payload }) => {
     case actions.PROFILE_EDIT_START:
       return {
         ...state,
-        verifyEmail: {
+        profileEdit: {
           ...state,
-          verifyEmail: { ...state.verifyEmail },
+          profileEdit: { ...state.profileEdit },
           loading: true
         }
       };
@@ -113,9 +113,9 @@ export default (state = initialState, { type, payload }) => {
     case actions.PROFILE_EDIT_SUCCESS:
       return {
         ...state,
-        verifyEmail: {
+        profileEdit: {
           ...state,
-          verifyEmail: { ...state.verifyEmail },
+          profileEdit: { ...state.profileEdit },
           loading: false,
           error: false
         }
@@ -124,9 +124,9 @@ export default (state = initialState, { type, payload }) => {
     case actions.PROFILE_EDIT_FAIL:
       return {
         ...state,
-        verifyEmail: {
+        profileEdit: {
           ...state,
-          verifyEmail: { ...state.verifyEmail },
+          profileEdit: { ...state.profileEdit },
           loading: false,
           error: payload
         }
