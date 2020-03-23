@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import Logout from './containers/Auth/Logout/Logout';
 import VerifyEmail from './containers/Auth/VerifyEmail/VerifyEmail';
 import RecoverPassword from './containers/Auth/RecoverPassword/RecoverPassword';
+import Profile from './containers/Auth/Profile/Profile';
 
 const App = ({ loggedIn, emailVerified }) => {
   console.log(loggedIn);
@@ -26,6 +27,7 @@ const App = ({ loggedIn, emailVerified }) => {
     routes = (
       <Switch>
         <Route exact path='/todos' component={Todos} />
+        <Route exact path='/profile' component={Profile} />
         <Route exact path='/logout' component={Logout} />
 
         <Redirect to='/' />
