@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Formik, Field } from 'formik';
+import { FormWrapper, StyledForm } from '../../../hoc/layouts/elements';
 import styled from 'styled-components';
 import * as Yup from 'yup';
-
-import { FormWrapper, StyledForm } from '../../../hoc/layouts/elements';
 import Message from '../../../components/UI/Message/Message';
 import Heading from '../../../components/UI/Heading/Heading';
 import Input from '../../../components/UI/Forms/Input/Input';
@@ -14,9 +13,7 @@ import * as actions from '../../../store/actions';
 
 const MessageWrapper = styled.div`
   position: absolute;
-  bottom: 2rem;
-  width: 100%;
-  padding: 0 3rem;
+  bottom: 0;
 `;
 
 const ProfileSchema = Yup.object().shape({
@@ -60,13 +57,14 @@ const Profile = ({ firebase, editProfile, loading, error, cleanUp }) => {
         }}
         validationSchema={ProfileSchema}
         onSubmit={async (values, { setSubmitting }) => {
+          console.log(values);
           await editProfile(values);
           setSubmitting(false);
         }}
       >
         {({ isSubmitting, isValid }) => (
           <FormWrapper>
-            <Heading noMargin size='h1' color='white'>
+            <Heading size='h1' color='white' noMargin>
               Edit your profile
             </Heading>
             <Heading bold size='h4' color='white'>
@@ -91,24 +89,27 @@ const Profile = ({ firebase, editProfile, loading, error, cleanUp }) => {
                 placeholder='Your email...'
                 component={Input}
               />
+
               <Field
                 type='password'
                 name='password'
                 placeholder='Your password...'
                 component={Input}
               />
+
               <Field
                 type='password'
                 name='confirmPassword'
                 placeholder='Re-type your password...'
                 component={Input}
               />
+
               <Button
-                disabled={!isValid || isSubmitting}
                 loading={loading ? 'Editing...' : null}
+                disabled={!isValid || isSubmitting}
                 type='submit'
               >
-                Edit
+                Edit Profile
               </Button>
               <MessageWrapper>
                 <Message error show={error}>

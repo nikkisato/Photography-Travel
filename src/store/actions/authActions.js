@@ -109,6 +109,7 @@ export const editProfile = data => async (
   const { uid: userId, email: userEmail } = getState().firebase.auth;
   dispatch({ type: actions.PROFILE_EDIT_START });
   try {
+    //edit the user profile
     if (data.email !== userEmail) {
       await user.updateEmail(data.email);
     }
