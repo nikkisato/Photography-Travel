@@ -11,6 +11,10 @@ const initialState = {
   recoverPassword: {
     error: null,
     loading: false
+  },
+  profileEdit: {
+    error: null,
+    loading: false
   }
 };
 
@@ -28,6 +32,11 @@ export default (state = initialState, { type, payload }) => {
         },
         recoverPassword: {
           ...state.recoverPassword,
+          loading: false,
+          error: null
+        },
+        profileEdit: {
+          ...state.profileEdit,
           loading: false,
           error: null
         }
@@ -86,6 +95,38 @@ export default (state = initialState, { type, payload }) => {
         verifyEmail: {
           ...state,
           recoverPassword: { ...state.recoverPassword },
+          loading: false,
+          error: payload
+        }
+      };
+
+    case actions.PROFILE_EDIT_START:
+      return {
+        ...state,
+        verifyEmail: {
+          ...state,
+          verifyEmail: { ...state.verifyEmail },
+          loading: true
+        }
+      };
+
+    case actions.PROFILE_EDIT_SUCCESS:
+      return {
+        ...state,
+        verifyEmail: {
+          ...state,
+          verifyEmail: { ...state.verifyEmail },
+          loading: false,
+          error: false
+        }
+      };
+
+    case actions.PROFILE_EDIT_FAIL:
+      return {
+        ...state,
+        verifyEmail: {
+          ...state,
+          verifyEmail: { ...state.verifyEmail },
           loading: false,
           error: payload
         }

@@ -28,16 +28,15 @@ const ProfileSchema = Yup.object().shape({
     .email('Invalid email.')
     .required('The email is required.'),
   password: Yup.string().min(8, 'The password is too short.'),
-  confirmPassword: Yup.string()
-    .when('password', {
-      is: password => password.length > 0,
-      then: Yup.string()
-    })
-    .oneOf([Yup.ref('password'), null], `Password doesn't match`)
-    .required('You need to confirm your password.')
+  confirmPassword: Yup.string().when('password', {
+    is: password => password.length > 0,
+    then: Yup.string()
+      .required('You need to confirm your password.')
+      .oneOf([Yup.ref('password'), null], `Password doesn't match`)
+  })
 });
 
-const Profile = ({ firebase }) => {
+const Profile = ({ firebase, editProfile, loading, error }) => {
   if (!firebase.profile.isLoaded) return null;
   return (
     <Formik
@@ -50,8 +49,7 @@ const Profile = ({ firebase }) => {
       }}
       validationSchema={ProfileSchema}
       onSubmit={async (values, { setSubmitting }) => {
-        console.log(values);
-        // await profile(values);
+        await editProfile(values);
         setSubmitting(false);
       }}
     >
@@ -98,16 +96,21 @@ const Profile = ({ firebase }) => {
             />
 
             <Button
-              //   loading={loading ? 'Signing up...' : null}
+              loading={loading ? 'Editing...' : null}
               disabled={!isValid || isSubmitting}
               type='submit'
             >
               Edit Profile
             </Button>
             <MessageWrapper>
-              {/* <Message error show={error}>
+              <Message error show={error}>
                 {error}
-              </Message> */}
+              </Message>
+            </MessageWrapper>
+            <MessageWrapper>
+              <Message success show={error === false}>
+                Profile was updated!
+              </Message>
             </MessageWrapper>
           </StyledForm>
         </FormWrapper>
@@ -116,10 +119,14 @@ const Profile = ({ firebase }) => {
   );
 };
 
-const mapStateToProps = ({ firebase }) => ({
-  firebase
+const mapStateToProps = ({ firebase, auth }) => ({
+  firebase,
+  loading: auth.profileEdit.loading,
+  error: auth.profileEdit.error
 });
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = {
+  editProfile: actions.editProfile
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);
