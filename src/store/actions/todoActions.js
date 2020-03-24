@@ -15,16 +15,25 @@ export const addTodo = data => async (dispatch, getState, { getFirestore }) => {
 
     const newToDo = {
       id: new Date().valueOf(),
-      todos: data.todo
+      todo: data.todo
     };
 
-    firestore
+    if(!res.data()) {
+      firestore
+      .collection('todos')
+      .doc(userId)
+      .set({
+        todos: [...res.data().todos, newToDo]
+      });
+    } else {
+      firestore
       .collection('todos')
       .doc(userId)
       .update({
         todos: [...res.data().todos, newToDo]
       });
-
+    }
+   
     dispatch({ type: actions.ADD_TODO_SUCCESS });
     return true;
   } catch (err) {

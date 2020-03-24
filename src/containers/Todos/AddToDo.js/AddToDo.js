@@ -49,7 +49,7 @@ const AddToDo = ({ addTodo, error, loading }) => {
         </Heading>
 
         <Formik
-          initialValues={{ todos: '' }}
+          initialValues={{ todo: '' }}
           validationSchema={TodoSchema}
           onSubmit={async (values, { setSubmitting }) => {
             const res = await addTodo(values);
