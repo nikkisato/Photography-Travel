@@ -24,11 +24,23 @@ const WrappedModal = styled.div`
   transition: all 0.1s;
 `;
 
+const InsideWrapper = styled.div`
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  padding: 4rem 3rem;
+`;
+
 const Modal = ({ opened, close, click, children }) => {
   return ReactDOM.createPortal(
     <>
       <Backdrop close={close} opened={opened} />
-      <WrappedModal opened={opened}>{children}</WrappedModal>
+      <WrappedModal opened={opened}>
+        <InsideWrapper>{children}</InsideWrapper>
+      </WrappedModal>
     </>,
     document.getElementById('root-modal')
   );

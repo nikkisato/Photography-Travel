@@ -20,6 +20,30 @@ const MessageWrapper = styled.div`
   padding: 0 3rem;
 `;
 
+const DeleteWrapper = styled.div`
+  cursor: pointer;
+  color: var(--color-errorRed);
+  font-size: 1.3rem;
+  transition: all 0.2s;
+
+  &:hover {
+    transform: translateY(-3px);
+  }
+
+  &:active {
+    transform: translateY(2px);
+  }
+  margin-top: 2rem;
+  font-weight: 700;
+`;
+
+const ButtonsWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  margin-bottom: 2rem;
+  justify-content: space-around;
+`;
+
 const ProfileSchema = Yup.object().shape({
   firstName: Yup.string()
     .required('Your first name is required.')
@@ -41,7 +65,16 @@ const ProfileSchema = Yup.object().shape({
   })
 });
 
-const Profile = ({ firebase, editProfile, loading, error, cleanUp }) => {
+const Profile = ({
+  firebase,
+  editProfile,
+  loading,
+  error,
+  cleanUp,
+  loadingDelete,
+  errorDelete,
+  deleteUser
+}) => {
   useEffect(() => {
     return () => {
       cleanUp();
@@ -123,13 +156,39 @@ const Profile = ({ firebase, editProfile, loading, error, cleanUp }) => {
                   Profile was updated!
                 </Message>
               </MessageWrapper>
-              <p onClick={() => setModalOpened(true)}>Delete my account</p>
+              <DeleteWrapper onClick={() => setModalOpened(true)}>
+                Delete my account
+              </DeleteWrapper>
             </StyledForm>
           </FormWrapper>
         )}
       </Formik>
       <Modal opened={modalOpened} close={() => setModalOpened(false)}>
-        This is a modal MWAHAHAHAH
+        <Heading noMargin size='h1' color='white'>
+          Delete your account
+        </Heading>
+        <Heading bold size='h4' color='white'>
+          Do you really want to delete your account?
+        </Heading>
+        <ButtonsWrapper>
+          <Button
+            color='red'
+            contain
+            disabled={loadingDelete}
+            loading={loadingDelete ? 'Deleting' : null}
+            onClick={() => deleteUser()}
+          >
+            Delete
+          </Button>
+          <Button color='main' contain onClick={() => setModalOpened(false)}>
+            Cancel
+          </Button>
+        </ButtonsWrapper>
+        <MessageWrapper>
+          <Message error show={errorDelete}>
+            {errorDelete}
+          </Message>
+        </MessageWrapper>
       </Modal>
     </>
   );
@@ -138,12 +197,15 @@ const Profile = ({ firebase, editProfile, loading, error, cleanUp }) => {
 const mapStateToProps = ({ firebase, auth }) => ({
   firebase,
   loading: auth.profileEdit.loading,
-  error: auth.profileEdit.error
+  error: auth.profileEdit.error,
+  loadingDelete: auth.deleteUser.loading,
+  errorDelete: auth.deleteUser.error
 });
 
 const mapDispatchToProps = {
   editProfile: actions.editProfile,
-  cleanUp: actions.clean
+  cleanUp: actions.clean,
+  deleteUser: actions.deleteUser
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);
