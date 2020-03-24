@@ -29,6 +29,9 @@ const NavItems = ({ mobile, clicked, loggedIn }) => {
         <NavItem clicked={clicked} mobile={mobile} link='/logout'>
           Logout
         </NavItem>
+        <NavItem clicked={clicked} mobile={mobile} link='/profile'>
+          Account
+        </NavItem>
       </Ul>
     );
   } else {

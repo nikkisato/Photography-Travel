@@ -9,6 +9,7 @@ import Heading from '../../../components/UI/Heading/Heading';
 import * as actions from '../../../store/actions';
 import { connect } from 'react-redux';
 import Message from '../../../components/UI/Message/Message';
+import CustomLink from '../../../components/UI/CustomLink/CustomLink';
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string()
@@ -69,6 +70,9 @@ const Login = ({ loading, login, error, cleanUp }) => {
             >
               Login
             </Button>
+            <CustomLink link='/recover' color='white'>
+              Forgot your password?
+            </CustomLink>
             <MessageWrapper>
               <Message error show={error}>
                 {error}
