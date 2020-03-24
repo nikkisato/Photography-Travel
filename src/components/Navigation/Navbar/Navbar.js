@@ -8,7 +8,7 @@ import { Container } from '../../../hoc/layouts/elements';
 const FixedWrapper = styled.div`
   position: fixed;
 
-  background-color: var(--color-main);
+  background-color: var(--color-mainDark);
   padding: 0rem 2rem;
   top: 0;
   left: 0;

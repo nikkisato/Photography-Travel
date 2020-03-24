@@ -26,11 +26,11 @@ const NavItems = ({ mobile, clicked, loggedIn }) => {
         <NavItem clicked={clicked} mobile={mobile} link='/todos'>
           Todos
         </NavItem>
-        <NavItem clicked={clicked} mobile={mobile} link='/logout'>
-          Logout
-        </NavItem>
         <NavItem clicked={clicked} mobile={mobile} link='/profile'>
           Account
+        </NavItem>
+        <NavItem clicked={clicked} mobile={mobile} link='/logout'>
+          Logout
         </NavItem>
       </Ul>
     );
