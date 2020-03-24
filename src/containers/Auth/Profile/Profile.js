@@ -59,8 +59,8 @@ const ProfileSchema = Yup.object().shape({
     is: password => password.length > 0,
     then: Yup.string()
       .required('You need to confirm your password.')
-      .oneOf([Yup.ref('password'), null], `Password doesn't match`),
-  }),
+      .oneOf([Yup.ref('password'), null], `Password doesn't match`)
+  })
 });
 
 const Profile = ({
@@ -71,7 +71,7 @@ const Profile = ({
   loadingDelete,
   errorDelete,
   deleteUser,
-  cleanUp,
+  cleanUp
 }) => {
   useEffect(() => {
     return () => {
@@ -90,7 +90,7 @@ const Profile = ({
           lastName: firebase.profile.lastName,
           email: firebase.auth.email,
           password: '',
-          confirmPassword: '',
+          confirmPassword: ''
         }}
         validationSchema={ProfileSchema}
         onSubmit={async (values, { setSubmitting }) => {
@@ -101,47 +101,47 @@ const Profile = ({
       >
         {({ isSubmitting, isValid }) => (
           <FormWrapper>
-            <Heading noMargin size="h1" color="white">
+            <Heading noMargin size='h1' color='white'>
               Edit your profile
             </Heading>
-            <Heading bold size="h4" color="white">
+            <Heading bold size='h4' color='white'>
               Here you can edit your profile
             </Heading>
             <StyledForm>
               <Field
-                type="text"
-                name="firstName"
-                placeholder="Your first name..."
+                type='text'
+                name='firstName'
+                placeholder='Your first name...'
                 component={Input}
               />
               <Field
-                type="text"
-                name="lastName"
-                placeholder="Your last name..."
+                type='text'
+                name='lastName'
+                placeholder='Your last name...'
                 component={Input}
               />
               <Field
-                type="email"
-                name="email"
-                placeholder="Your email..."
+                type='email'
+                name='email'
+                placeholder='Your email...'
                 component={Input}
               />
               <Field
-                type="password"
-                name="password"
-                placeholder="Your password..."
+                type='password'
+                name='password'
+                placeholder='Your password...'
                 component={Input}
               />
               <Field
-                type="password"
-                name="confirmPassword"
-                placeholder="Re-type your password..."
+                type='password'
+                name='confirmPassword'
+                placeholder='Re-type your password...'
                 component={Input}
               />
               <Button
                 disabled={!isValid || isSubmitting}
                 loading={loading ? 'Editing...' : null}
-                type="submit"
+                type='submit'
               >
                 Edit
               </Button>
@@ -163,23 +163,23 @@ const Profile = ({
         )}
       </Formik>
       <Modal opened={modalOpened} close={() => setModalOpened(false)}>
-        <Heading noMargin size="h1" color="white">
+        <Heading noMargin size='h1' color='white'>
           Delete your account
         </Heading>
-        <Heading bold size="h4" color="white">
+        <Heading bold size='h4' color='white'>
           Do you really want to delete your account?
         </Heading>
         <ButtonsWrapper>
           <Button
             contain
             onClick={() => deleteUser()}
-            color="red"
+            color='red'
             disabled={loadingDelete}
             loading={loadingDelete ? 'Deleting...' : null}
           >
             Delete
           </Button>
-          <Button color="main" contain onClick={() => setModalOpened(false)}>
+          <Button color='main' contain onClick={() => setModalOpened(false)}>
             Cancel
           </Button>
         </ButtonsWrapper>
@@ -198,16 +198,13 @@ const mapStateToProps = ({ firebase, auth }) => ({
   loading: auth.profileEdit.loading,
   error: auth.profileEdit.error,
   loadingDelete: auth.deleteUser.loading,
-  errorDelete: auth.deleteUser.error,
+  errorDelete: auth.deleteUser.error
 });
 
 const mapDispatchToProps = {
   editProfile: actions.editProfile,
   cleanUp: actions.clean,
-  deleteUser: actions.deleteUser,
+  deleteUser: actions.deleteUser
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Profile);
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);
