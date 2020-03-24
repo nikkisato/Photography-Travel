@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
-import * as actions from '../../../store/actions';
+import { connect } from 'react-redux';
 import { Formik, Field } from 'formik';
 import * as Yup from 'yup';
-import { StyledForm } from '../../../hoc/layouts/elements';
-import { connect } from 'react-redux';
-import Message from '../../../components/UI/Message/Message';
-import Heading from '../../../components/UI/Heading/Heading';
-import Input from '../../../components/UI/Forms/Input/Input';
-import Modal from '../../../components/UI/Modal/Modal';
+import styled from 'styled-components';
 
 import Button from '../../../components/UI/Forms/Button/Button';
+import Heading from '../../../components/UI/Heading/Heading';
+import Modal from '../../../components/UI/Modal/Modal';
+import Input from '../../../components/UI/Forms/Input/Input';
+import Message from '../../../components/UI/Message/Message';
+import { StyledForm } from '../../../hoc/layouts/elements';
+
+import * as actions from '../../../store/actions';
 
 const ButtonsWrapper = styled.div`
   display: flex;
@@ -28,35 +29,36 @@ const MessageWrapper = styled.div`
 
 const TodoSchema = Yup.object().shape({
   todo: Yup.string()
-    .required('The todo is required')
+    .required('The todo is required.')
     .min(4, 'Too short.')
 });
 
-const AddToDo = ({ addTodo, error, loading }) => {
-  const [isOpened, setIsOpened] = useState(false);
+const AddTodo = ({ addTodo, loading, error }) => {
+  const [isOpened, setisOpened] = useState(false);
   return (
     <>
-      <Button color='main' onClick={() => setIsOpened(true)} contain>
-        Add to do
+      <Button color='main' contain onClick={() => setisOpened(true)}>
+        Add Todo
       </Button>
-
-      <Modal opened={isOpened} close={() => setIsOpened(false)}>
+      <Modal opened={isOpened} close={() => setisOpened(false)}>
         <Heading noMargin size='h1' color='white'>
-          Add your new Todo
+          Add your new todo
         </Heading>
         <Heading bold size='h4' color='white'>
-          Type your todo and press add!
+          Type your todo and press add
         </Heading>
-
         <Formik
-          initialValues={{ todo: '' }}
+          initialValues={{
+            todo: ''
+          }}
           validationSchema={TodoSchema}
-          onSubmit={async (values, { setSubmitting }) => {
+          onSubmit={async (values, { setSubmitting, resetForm }) => {
             const res = await addTodo(values);
-            if (res) {
-              setIsOpened(false);
-            }
             setSubmitting(false);
+            if (res) {
+              setisOpened(false);
+            }
+            resetForm();
           }}
         >
           {({ isSubmitting, isValid }) => (
@@ -64,25 +66,23 @@ const AddToDo = ({ addTodo, error, loading }) => {
               <Field
                 type='text'
                 name='todo'
-                placeholder='Type your Todo...'
+                placeholder='Write your todo...'
                 component={Input}
               />
-
               <ButtonsWrapper>
                 <Button
                   contain
-                  disabled={!isValid || isSubmitting}
                   color='main'
                   type='submit'
-                  loading={loading ? 'Adding To do...' : null}
+                  disabled={!isValid || isSubmitting}
+                  loading={loading ? 'Adding...' : null}
                 >
-                  Add to do
+                  Add todo
                 </Button>
-                <Button color='main' contain onClick={() => setIsOpened(false)}>
+                <Button color='main' contain onClick={() => setisOpened(false)}>
                   Cancel
                 </Button>
               </ButtonsWrapper>
-
               <MessageWrapper>
                 <Message error show={error}>
                   {error}
@@ -105,4 +105,4 @@ const mapDispatchToProps = {
   addTodo: actions.addTodo
 };
 
-export default connect(null, mapDispatchToProps)(AddToDo);
+export default connect(mapStateToProps, mapDispatchToProps)(AddTodo);
