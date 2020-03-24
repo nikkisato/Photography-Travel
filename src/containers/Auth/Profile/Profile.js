@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Formik, Field } from 'formik';
 import styled from 'styled-components';
@@ -9,6 +9,7 @@ import Message from '../../../components/UI/Message/Message';
 import Heading from '../../../components/UI/Heading/Heading';
 import Input from '../../../components/UI/Forms/Input/Input';
 import Button from '../../../components/UI/Forms/Button/Button';
+import Modal from '../../../components/UI/Modal/Modal';
 
 import * as actions from '../../../store/actions';
 
@@ -37,7 +38,7 @@ const ProfileSchema = Yup.object().shape({
     then: Yup.string()
       .required('You need to confirm your password.')
       .oneOf([Yup.ref('password'), null], `Password doesn't match`)
-  }),
+  })
 });
 
 const Profile = ({ firebase, editProfile, loading, error, cleanUp }) => {
@@ -46,6 +47,8 @@ const Profile = ({ firebase, editProfile, loading, error, cleanUp }) => {
       cleanUp();
     };
   }, [cleanUp]);
+
+  const [modalOpened, setModalOpened] = useState(false);
 
   if (!firebase.profile.isLoaded) return null;
   return (
@@ -120,10 +123,14 @@ const Profile = ({ firebase, editProfile, loading, error, cleanUp }) => {
                   Profile was updated!
                 </Message>
               </MessageWrapper>
+              <p onClick={() => setModalOpened(true)}>Delete my account</p>
             </StyledForm>
           </FormWrapper>
         )}
       </Formik>
+      <Modal opened={modalOpened} close={() => setModalOpened(false)}>
+        This is a modal MWAHAHAHAH
+      </Modal>
     </>
   );
 };
