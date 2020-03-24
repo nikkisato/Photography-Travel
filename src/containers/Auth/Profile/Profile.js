@@ -37,7 +37,7 @@ const ProfileSchema = Yup.object().shape({
     then: Yup.string()
       .required('You need to confirm your password.')
       .oneOf([Yup.ref('password'), null], `Password doesn't match`)
-  })
+  }),
 });
 
 const Profile = ({ firebase, editProfile, loading, error, cleanUp }) => {
