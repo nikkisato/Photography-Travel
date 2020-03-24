@@ -69,6 +69,9 @@ const Login = ({ loading, login, error, cleanUp }) => {
             >
               Login
             </Button>
+            <CustomLink link='/recover' color='white'>
+              Forgot your password?
+            </CustomLink>
             <MessageWrapper>
               <Message error show={error}>
                 {error}
