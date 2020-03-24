@@ -21,7 +21,7 @@ const ButtonsWrapper = styled.div`
 
 const MessageWrapper = styled.div`
   position: absolute;
-  bottom: 2rem;
+  bottom: 0rem;
   width: 100%;
   padding: 0 3rem;
 `;
@@ -52,7 +52,10 @@ const AddToDo = ({ addTodo, error, loading }) => {
           initialValues={{ todos: '' }}
           validationSchema={TodoSchema}
           onSubmit={async (values, { setSubmitting }) => {
-            await addTodo(values);
+            const res = await addTodo(values);
+            if (res) {
+              setIsOpened(false);
+            }
             setSubmitting(false);
           }}
         >

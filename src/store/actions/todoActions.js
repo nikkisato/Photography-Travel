@@ -8,7 +8,7 @@ export const addTodo = data => async (dispatch, getState, { getFirestore }) => {
   dispatch({ type: actions.ADD_TODO_START });
 
   try {
-    const res = await firestore
+    const res = await firestore.asdfasddfs
       .collection('todos')
       .doc(userId)
       .get();
@@ -26,6 +26,7 @@ export const addTodo = data => async (dispatch, getState, { getFirestore }) => {
       });
 
     dispatch({ type: actions.ADD_TODO_SUCCESS });
+    return true;
   } catch (err) {
     dispatch({ type: actions.ADD_TODO_FAIL, payload: err.message });
   }

@@ -1,8 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
+import { firestoreConnect } from 'react-redux-firebase';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
 
 import Heading from '../../components/UI/Heading/Heading';
-
+import Todo from './Todo/Todo';
 import { Container } from '../../hoc/layouts/elements';
 import AddToDo from './AddToDo.js/AddToDo';
 
@@ -33,10 +36,22 @@ const Todos = () => {
             All you have to do now....
           </Heading>
           <AddToDo />
+
+          <Todo />
         </InnerWrapper>
       </Container>
     </Wrapper>
   );
 };
 
-export default Todos;
+const mapStateToProps = ({ firebase, firestore }) => ({
+  userId: firebase.auth.uid,
+  todos: firestore.data.todos
+});
+
+const mapDispatchToProps = {};
+
+export default compose(
+  connect(mapDispatchToProps, mapStateToProps),
+  firestoreConnect(props => [`todos/${props.userId}`])
+)(Todos);

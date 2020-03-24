@@ -2,7 +2,8 @@ import * as actions from '../actions/actionTypes';
 
 const initialState = {
   error: null,
-  loading: false
+  loading: false,
+  
 };
 
 export default (state = initialState, { type, payload }) => {
