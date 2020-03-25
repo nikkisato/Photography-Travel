@@ -11,35 +11,28 @@ const StyledButton = styled.button`
   font-weight: 700;
   box-shadow: 0rem 0.5rem 3.5rem var(--shadow);
   background-color: ${({ color }) => {
-    if (color === 'red') {
-      return 'var(--color-errorRed)';
-    } else if (color === 'main') {
-      return 'var(--color-main)';
-    } else {
-      return 'var(--color-mainLighter)';
-    }
+    if (color === 'red') return 'var(--color-errorRed)';
+    else if (color === 'main') return 'var(--color-mainDark)';
+    else return 'var(--color-mainLighter)';
   }};
-
+  margin: 1.5rem 0 2rem 0;
   border: none;
   transition: all 0.2s;
-  margin: 1.5rem 0 1rem 0;
-
   &:hover {
     transform: translateY(-3px);
   }
-
   &:active {
     transform: translateY(2px);
   }
-
   &:disabled {
     cursor: not-allowed;
     background-color: #333;
   }
 `;
+
 const Button = ({ children, disabled, loading, contain, color, ...rest }) => {
   return (
-    <StyledButton color={color} contain={contain} {...rest} disabled={disabled}>
+    <StyledButton color={color} contain={contain} disabled={disabled} {...rest}>
       {loading ? loading : children}
     </StyledButton>
   );

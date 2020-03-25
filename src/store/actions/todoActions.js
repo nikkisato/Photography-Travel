@@ -65,6 +65,7 @@ export const deleteTodo = id => async (
         todos: newTodos
       });
     dispatch({ type: actions.DELETE_TODO_SUCCESS });
+
   } catch (err) {
     dispatch({ type: actions.DELETE_TODO_FAIL, payload: err.message });
   }
@@ -99,6 +100,7 @@ export const editTodo = (id, data) => async (
       });
 
     dispatch({ type: actions.ADD_TODO_SUCCESS });
+    return true;
   } catch (err) {
     dispatch({ type: actions.ADD_TODO_FAIL, payload: err.message });
   }

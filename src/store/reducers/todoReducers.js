@@ -6,7 +6,7 @@ const initialState = {
   deleteTodo: {
     error: null,
     loading: false
-  },
+  }
 };
 
 export default (state = initialState, { type, payload }) => {
@@ -26,23 +26,23 @@ export default (state = initialState, { type, payload }) => {
     case actions.DELETE_TODO_SUCCESS:
       return {
         ...state,
-        deleteTodo: { ...state.deleteTodo, loading: true, error: false }
+        deleteTodo: { ...state.deleteTodo, loading: false, error: false }
       };
 
     case actions.DELETE_TODO_FAIL:
       return {
         ...state,
-        deleteTodo: { ...state.deleteTodo, loading: true, error: payload }
+        deleteTodo: { ...state.deleteTodo, loading: false, error: payload }
       };
 
-    case actions.EDIT_TODO_START:
-      return { ...state, loading: true };
+    // case actions.EDIT_TODO_START:
+    //   return { ...state, loading: true };
 
-    case actions.EDIT_TODO_SUCCESS:
-      return { ...state, loading: false, error: false };
+    // case actions.EDIT_TODO_SUCCESS:
+    //   return { ...state, loading: false, error: false };
 
-    case actions.EDIT_TODO_FAIL:
-      return { ...state, loading: false, error: payload };
+    // case actions.EDIT_TODO_FAIL:
+    //   return { ...state, loading: false, error: payload };
 
     default:
       return state;
