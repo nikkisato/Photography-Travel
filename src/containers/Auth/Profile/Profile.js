@@ -59,7 +59,7 @@ const ProfileSchema = Yup.object().shape({
     is: password => password.length > 0,
     then: Yup.string()
       .required('You need to confirm your password.')
-      .oneOf([Yup.ref('password'), null], `Password doesn't match.`)
+      .oneOf([Yup.ref('password'), null], `Password doesn't match`)
   })
 });
 
@@ -94,7 +94,7 @@ const Profile = ({
         }}
         validationSchema={ProfileSchema}
         onSubmit={async (values, { setSubmitting }) => {
-          console.log(values);
+          // edit the profile here
           await editProfile(values);
           setSubmitting(false);
         }}
