@@ -58,9 +58,12 @@ const Todos = ({ todos, requesting, requested, userId }) => {
   } else {
     content = (
       <Content>
-        {todos[userId].todos.map(todo => (
-          <Todo key={todo.id} todo={todo} />
-        ))}
+        {todos[userId].todos
+          .slice(0)
+          .reverse()
+          .map(todo => (
+            <Todo key={todo.id} todo={todo} />
+          ))}
       </Content>
     );
   }
