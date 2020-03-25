@@ -3,10 +3,11 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { firestoreConnect } from 'react-redux-firebase';
+import Button from '../../components/UI/Forms/Button/Button';
 
 import Heading from '../../components/UI/Heading/Heading';
 import { Container } from '../../hoc/layouts/elements';
-import AddToDo from './AddToDo/AddToDo';
+import InputTodo from './InputTodo/InputTodo';
 import Loader from '../../components/UI/Loader/Loader';
 import Todo from './Todo/Todo';
 
@@ -35,6 +36,7 @@ const Content = styled.div`
 `;
 
 const Todos = ({ todos, requesting, requested, userId }) => {
+  const [isAdding, setisAdding] = useState(false);
   let content;
   if (!todos) {
     content = (
@@ -42,7 +44,10 @@ const Todos = ({ todos, requesting, requested, userId }) => {
         <Loader isWhite />
       </Content>
     );
-  } else if (!todos[userId] && requested[`todos/${userId}`]) {
+  } else if (
+    (!todos[userId] && requested[`todos/${userId}`]) ||
+    todos[userId].todos.length === 0
+  ) {
     content = (
       <Content>
         <Heading color='white' size='h2'>
@@ -70,7 +75,11 @@ const Todos = ({ todos, requesting, requested, userId }) => {
           <Heading bold size='h4' color='white'>
             All you have to do for now...
           </Heading>
-          <AddToDo />
+          <Button color='main' contain onClick={() => setisAdding(true)}>
+            Add Todo
+          </Button>
+          <InputTodo opened={isAdding} close={() => setisAdding(false)} />
+
           {content}
         </InnerWrapper>
       </Container>
