@@ -130,7 +130,6 @@ export const editProfile = data => async (
     dispatch({ type: actions.PROFILE_EDIT_FAIL, payload: err.message });
   }
 };
-
 //Delete User
 export const deleteUser = () => async (
   dispatch,
