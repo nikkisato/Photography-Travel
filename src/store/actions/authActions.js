@@ -1,5 +1,6 @@
 import * as actions from './actionTypes';
-//SignUp
+
+// Sign up action creator
 export const signUp = data => async (
   dispatch,
   getState,
@@ -8,13 +9,12 @@ export const signUp = data => async (
   const firebase = getFirebase();
   const firestore = getFirestore();
   dispatch({ type: actions.AUTH_START });
-
   try {
     const res = await firebase
       .auth()
       .createUserWithEmailAndPassword(data.email, data.password);
 
-    //send the Verification email
+    // Send the verfication email
     const user = firebase.auth().currentUser;
     await user.sendEmailVerification();
 
@@ -32,10 +32,9 @@ export const signUp = data => async (
   dispatch({ type: actions.AUTH_END });
 };
 
-//Logout action
+// Logout action creator
 export const signOut = () => async (dispatch, getState, { getFirebase }) => {
   const firebase = getFirebase();
-
   try {
     await firebase.auth().signOut();
   } catch (err) {
@@ -43,12 +42,10 @@ export const signOut = () => async (dispatch, getState, { getFirebase }) => {
   }
 };
 
-//Login Actions
-
+// Login action creator
 export const signIn = data => async (dispatch, getState, { getFirebase }) => {
   const firebase = getFirebase();
   dispatch({ type: actions.AUTH_START });
-
   try {
     await firebase.auth().signInWithEmailAndPassword(data.email, data.password);
     dispatch({ type: actions.AUTH_SUCCESS });
@@ -58,12 +55,12 @@ export const signIn = data => async (dispatch, getState, { getFirebase }) => {
   dispatch({ type: actions.AUTH_END });
 };
 
-//Clean up Error messages
+// Clean up messages
 export const clean = () => ({
   type: actions.CLEAN_UP
 });
 
-//verify email actionTypes
+// Verify email actionTypes
 export const verifyEmail = () => async (
   dispatch,
   getState,
@@ -80,8 +77,7 @@ export const verifyEmail = () => async (
   }
 };
 
-//send recover password
-
+// Send recover password
 export const recoverPassword = data => async (
   dispatch,
   getState,
@@ -90,6 +86,7 @@ export const recoverPassword = data => async (
   const firebase = getFirebase();
   dispatch({ type: actions.RECOVERY_START });
   try {
+    // send email ehre
     await firebase.auth().sendPasswordResetEmail(data.email);
     dispatch({ type: actions.RECOVERY_SUCCESS });
   } catch (err) {
@@ -97,7 +94,7 @@ export const recoverPassword = data => async (
   }
 };
 
-//Edit Profile
+// Edit profile
 export const editProfile = data => async (
   dispatch,
   getState,
@@ -130,7 +127,8 @@ export const editProfile = data => async (
     dispatch({ type: actions.PROFILE_EDIT_FAIL, payload: err.message });
   }
 };
-//Delete User
+
+// Delete user
 export const deleteUser = () => async (
   dispatch,
   getState,
@@ -141,14 +139,18 @@ export const deleteUser = () => async (
   const user = firebase.auth().currentUser;
   const userId = getState().firebase.auth.uid;
   dispatch({ type: actions.DELETE_USER_START });
-
   try {
     await firestore
-      .collections('users')
+      .collection('users')
       .doc(userId)
       .delete();
 
-    await user.delete;
+    await firestore
+      .collection('todos')
+      .doc(userId)
+      .delete();
+
+    await user.delete();
   } catch (err) {
     dispatch({ type: actions.DELETE_USER_FAIL, payload: err.message });
   }

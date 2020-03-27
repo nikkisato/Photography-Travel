@@ -10,6 +10,7 @@ import Logout from './containers/Auth/Logout/Logout';
 import VerifyEmail from './containers/Auth/VerifyEmail/VerifyEmail';
 import RecoverPassword from './containers/Auth/RecoverPassword/RecoverPassword';
 import Profile from './containers/Auth/Profile/Profile';
+// const Todos = React.lazy(() => import('./containers/Todos/Todos'));
 
 const App = ({ loggedIn, emailVerified }) => {
   console.log(loggedIn);

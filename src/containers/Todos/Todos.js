@@ -35,7 +35,7 @@ const Content = styled.div`
   margin-top: 2rem;
 `;
 
-const Todos = ({ todos, requesting, requested, userId }) => {
+const Todos = ({ todos, requested, userId }) => {
   const [isAdding, setisAdding] = useState(false);
   let content;
   if (!todos) {
@@ -44,10 +44,15 @@ const Todos = ({ todos, requesting, requested, userId }) => {
         <Loader isWhite />
       </Content>
     );
-  } else if (
-    (!todos[userId] && requested[`todos/${userId}`]) ||
-    todos[userId].todos.length === 0
-  ) {
+  } else if (!todos[userId] || !todos[userId].todos) {
+    content = (
+      <Content>
+        <Heading color='white' size='h2'>
+          You have no todos!
+        </Heading>
+      </Content>
+    );
+  } else if (todos[userId].todos.length === 0) {
     content = (
       <Content>
         <Heading color='white' size='h2'>
