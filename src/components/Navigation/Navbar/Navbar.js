@@ -3,12 +3,12 @@ import styled from 'styled-components';
 import NavItems from '../NavItems/NavItems';
 
 import Logo from '../../Logo/Logo';
-import Container from '../../hoc/layouts/elements/Container';
+import { Container } from '../../../hoc/layouts/elements';
 
 const FixedWrapper = styled.div`
   position: fixed;
 
-  background-color: var(--color-main);
+  background-color: var(--color-mainDark);
   padding: 0rem 2rem;
   top: 0;
   left: 0;
@@ -24,13 +24,13 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
 `;
-const Navbar = () => {
+const Navbar = ({loggedIn}) => {
   return (
     <FixedWrapper>
       <Container>
         <Wrapper>
           <Logo />
-          <NavItems />
+          <NavItems loggedIn={loggedIn} />
         </Wrapper>
       </Container>
     </FixedWrapper>
