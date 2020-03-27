@@ -12,7 +12,7 @@ const LogoWrapper = styled.div`
 `;
 
 const Logo = () => {
-  return <LogoWrapper>Productivity</LogoWrapper>;
+  return <LogoWrapper>Photography Journal</LogoWrapper>;
 };
 
 export default Logo;
